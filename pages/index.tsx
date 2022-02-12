@@ -6,7 +6,6 @@ const Home: NextPage = () => {
   return (
     <div>
       <NavBar />
-      <div>eee</div>
     </div>
   )
 }
