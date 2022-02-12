@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserAuthData } from '../ts/userTypes'
 import authService from '../services/api/authService'
 import { useLocale } from '../hooks/i18n'
 import { useRouter } from 'next/router'
+import { useIsLoggedIn } from '../hooks/auth'
 
 const Auth = () => {
   const [userData, setUserData] = useState<UserAuthData>({ email: '', password: '' })
   const { t } = useLocale()
   const router = useRouter()
+  const isLoggedIn = useIsLoggedIn()
+
+  useEffect(() => {
+    if (isLoggedIn) router.replace('/')
+  }, [isLoggedIn])
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget
