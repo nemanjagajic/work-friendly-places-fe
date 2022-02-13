@@ -1,7 +1,7 @@
 import React from 'react'
-import { useLocale } from '../hooks/i18n'
+import { useLocale } from '../../hooks/i18n'
 import { useRouter } from 'next/router'
-import { useIsLoggedIn } from '../hooks/auth'
+import { useIsLoggedIn } from '../../hooks/auth'
 
 const IS_SERVER = typeof window === 'undefined'
 
