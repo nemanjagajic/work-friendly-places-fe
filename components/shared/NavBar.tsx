@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
   )
 
   return (
-    <ul className='flex flex-row p-4 border'>
+    <ul className='flex flex-row absolute p-4 border w-full h-30'>
       {items?.map((item) => renderNavBarItem(item))}
     </ul>
   )

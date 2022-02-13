@@ -2,24 +2,25 @@ import type { NextPage } from 'next'
 import NavBar from '../components/shared/NavBar'
 import PlacesList from '../components/places/PlacesList'
 import { useFetchPlaces } from '../hooks/places'
-import { Wrapper, Status } from '@googlemaps/react-wrapper'
-import Map from '../components/map/Map'
+import GoogleMap from '../components/map/GoogleMap'
 
 const Home: NextPage = () => {
   const { data: places } = useFetchPlaces()
 
-  const render = (status: Status) => {
-    return <h1>{status}</h1>
-  }
-
   return (
-    <div>
+    <>
       <NavBar />
-      {places && <PlacesList places={places} />}
-      {/*<div style={{ height: '80vh', width: '800px' }}>*/}
-      {/*  <Map />*/}
-      {/*</div>*/}
-    </div>
+      <div className='flex h-screen'>
+        <div className='flex flex-row w-full h-4/5 m-auto mt-32'>
+          <div className='w-1/2 overflow-scroll p-4'>
+            {places && <PlacesList places={places} />}
+          </div>
+          <div className='w-1/2 p-4'>
+            <GoogleMap />
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
