@@ -1,3 +1,15 @@
+type PlaceImage = {
+  data: {
+    attributes: {
+      formats: {
+        thumbnail: {
+          url: string
+        }
+      }
+    }
+  }
+}
+
 export interface Place {
   id: number,
   attributes: {
@@ -13,5 +25,7 @@ export interface Place {
     userId: number,
     createdAt: Date,
     updatedAt: Date,
+    coverImage: PlaceImage,
+    images: any
   }
 }

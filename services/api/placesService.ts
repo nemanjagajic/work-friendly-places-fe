@@ -8,7 +8,7 @@ const API_ENDPOINTS = {
 class PlacesService {
   getPlaces = async (): Promise<Array<Place>> => {
     try {
-      const { data: responseData } = await request.get(API_ENDPOINTS.PLACES)
+      const { data: responseData } = await request.get(`${API_ENDPOINTS.PLACES}?populate=*`)
       return responseData.data
     } catch (e) {
       throw e
