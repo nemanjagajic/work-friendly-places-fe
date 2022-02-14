@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { createCustomEqual } from 'fast-equals'
+import Marker from './Marker'
+import { Marker as MarkerInterface } from '../../ts/mapTypes'
 
 const render = (status: Status) => {
   return <h1>{status}</h1>
 }
 
-const GoogleMap: React.VFC = () => {
-  const [zoom, setZoom] = useState(3)
-  const [center, setCenter] = useState<google.maps.LatLngLiteral>({
-    lat: 0,
-    lng: 0,
-  })
+const INITIAL_ZOOM = 13
+
+type GoogleMapProps = {
+  markers: Array<MarkerInterface>
+}
+
+const GoogleMap: React.VFC<GoogleMapProps> = ({ markers }) => {
+  const zoom = INITIAL_ZOOM
+  const center: google.maps.LatLngLiteral = { lat: 45.2396, lng: 19.8227 }
 
   return (
     <div className='flex h-full'>
@@ -19,7 +24,15 @@ const GoogleMap: React.VFC = () => {
         <Map
           center={center}
           zoom={zoom}
-        />
+        >
+          {markers.map((marker, i) => (
+            <Marker
+              key={i}
+              position={{ lat: marker.lat, lng: marker.lng }} opacity={marker.isActive ? 1 : 0.7}
+
+            />
+          ))}
+        </Map>
       </Wrapper>
     </div>
   )
@@ -47,7 +60,14 @@ const Map: React.FC<google.maps.MapOptions> = ({
   }, [map, options])
 
   return (
-    <div ref={ref} className='grow h-full' />
+    <>
+      <div ref={ref} className='grow h-full' />
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { map })
+        }
+      })}
+    </>
   )
 }
 

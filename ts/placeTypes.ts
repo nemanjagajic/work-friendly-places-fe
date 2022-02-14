@@ -1,5 +1,5 @@
 export interface Place {
-  id: Number,
+  id: number,
   attributes: {
     title: string,
     workingHours: string,
@@ -8,9 +8,9 @@ export interface Place {
     country: string,
     city: string,
     street: string,
-    latitude: Number,
-    longitude: Number,
-    userId: Number,
+    latitude: number,
+    longitude: number,
+    userId: number,
     createdAt: Date,
     updatedAt: Date,
   }
