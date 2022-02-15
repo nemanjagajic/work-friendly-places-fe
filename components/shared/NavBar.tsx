@@ -10,7 +10,11 @@ interface NavBarItem {
   onClick: () => void
 }
 
-const NavBar: React.FC = () => {
+type NavBarProps = {
+  activeTab: string
+}
+
+const NavBar: React.FC<NavBarProps> = ({ activeTab }) => {
   const { t } = useLocale()
   const router = useRouter()
   const isLoggedIn = useIsLoggedIn()
@@ -21,20 +25,28 @@ const NavBar: React.FC = () => {
   }
 
   const items = [
-    { title: t.navbar.home, onClick: () => {} },
-    { title: t.navbar.addPlace, onClick: () => {} },
-    { title: t.navbar.aboutUs, onClick: () => {} },
     {
-      title: isLoggedIn ? t.auth.buttons.logOut : t.auth.buttons.logIn,
-      onClick: () => {
-        isLoggedIn ? logOut() : router.push('auth')
+      title: t.navbar.home, onClick: () => {
+      }
+    },
+    {
+      title: t.navbar.addPlace, onClick: () => {
+      }
+    },
+    {
+      title: t.navbar.aboutUs, onClick: () => {
       }
     }
   ]
 
   const renderNavBarItem = (item: NavBarItem) => (
     <li
-      className='p-2 m-2 border cursor-pointer'
+      className={
+        `p-2 mx-4 cursor-pointer text-base font-medium 
+      ${item.title === activeTab ? 'text-neutral-50' : 'text-gray-400'} 
+      hover:text-neutral-50
+      ease-in-out duration-200`
+      }
       key={item.title}
       onClick={item.onClick}
     >
@@ -43,9 +55,22 @@ const NavBar: React.FC = () => {
   )
 
   return (
-    <ul className='flex flex-row absolute p-4 border w-full h-30'>
-      {items?.map((item) => renderNavBarItem(item))}
-    </ul>
+    <nav className='flex flex-row place-content-between absolute p-4 w-full h-30 bg-indigo-700'>
+      <ul className='flex flex-row'>
+        {items?.map((item) => renderNavBarItem(item))}
+      </ul>
+      <div
+        className={
+          `p-2 mx-4 cursor-pointer text-base font-medium 
+          ${t.auth.buttons.logIn === activeTab ? 'text-neutral-50' : 'text-gray-400'} 
+          hover:text-neutral-50
+          ease-in-out duration-200`
+        }
+        onClick={() => isLoggedIn ? logOut() : router.push('auth')}
+      >
+        {isLoggedIn ? t.auth.buttons.logOut : t.auth.buttons.logIn}
+      </div>
+    </nav>
   )
 }
 

@@ -5,8 +5,10 @@ import { useFetchPlaces } from '../hooks/places'
 import GoogleMap from '../components/map/GoogleMap'
 import { useState } from 'react'
 import { Place } from '../ts/placeTypes'
+import { useLocale } from '../hooks/i18n'
 
 const Home: NextPage = () => {
+  const { t } = useLocale()
   const { data: places } = useFetchPlaces()
   const [hoveredPlace, setHoveredPlace] = useState<Place | null>(null)
   const markers = places ? places.map(p => ({
@@ -17,8 +19,8 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <NavBar />
-      <div className='flex h-screen'>
+      <NavBar activeTab={t.navbar.home} />
+      <div className='flex h-screen bg-neutral-50'>
         <div className='flex flex-row w-full h-4/5 m-auto mt-32'>
           <div className='w-1/2 overflow-scroll p-4'>
             {places && <PlacesList places={places} setHoveredPlace={setHoveredPlace} />}
