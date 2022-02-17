@@ -24,12 +24,13 @@ const GoogleMap: React.VFC<GoogleMapProps> = ({ markers }) => {
         <Map
           center={center}
           zoom={zoom}
+          disableDefaultUI
         >
           {markers.map((marker, i) => (
             <Marker
               key={i}
-              position={{ lat: marker.lat, lng: marker.lng }} opacity={marker.isActive ? 1 : 0.7}
-
+              position={{ lat: marker.lat, lng: marker.lng }}
+              opacity={marker.isActive ? 1 : 0.7}
             />
           ))}
         </Map>
